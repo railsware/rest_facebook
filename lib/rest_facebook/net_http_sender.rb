@@ -34,7 +34,7 @@ module RestFacebook
           request_str = "for request: "
           response[ 'request_args'].reverse.map{|h| request_str << " #{h[ 'key']}='#{h[ 'value']}'" }
           error_str = "#{response[ "error_msg"]} #{request_str}"
-          raise FacebookApi::RemoteStandardError.new( error_str, response[ "error_code"])
+          raise RemoteStandardError.new( error_str, response[ "error_code"])
         end
 
         response
