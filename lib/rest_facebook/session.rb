@@ -15,7 +15,7 @@ module RestFacebook
   class ExpiredSessionStandardError < RemoteStandardError; end
   class NotActivatedStandardError < StandardError; end
   
-  class FbSession
+  class Session
   
   
     # properties
@@ -35,12 +35,14 @@ module RestFacebook
     end
     
     def init_session_state params
-      s_params  = params.inject({}){ |memo,(k,v)| memo[ k.to_sym] = v; memo}
+      s_params  = params.symbolize_keys!
       
       @session_key         = s_params[ :session_key]
       @uid                 = s_params[ :uid]
       @expires             = s_params[ :expires]
       @secret_from_session = s_params[ :secret_from_session]
+      
+      self
     end
     
     def dump_session_state
@@ -52,7 +54,11 @@ module RestFacebook
       use_session_key && @session_key && params[:session_key] ||= @session_key
       final_params = params.merge(:sig => signature(params))
 
-      @sender.post_form(final_params)
+      @sender.post_form( final_params)
+    end
+    
+    def map_call(method, params={}, use_session_key=true)
+      ResponseMapper.map( method, call( method, params, use_session_key))
     end
     
     
