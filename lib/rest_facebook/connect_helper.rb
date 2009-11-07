@@ -8,7 +8,7 @@ module RestFacebook::ConnectHelper
   
   def init_fb_connect_js(*required_features)
 
-    init_string = "FB.init('#{RestFacebook::Connect::APP_API_KEY}','/xd_receiver.html', {});"
+    init_string = "FB.init('#{RestFacebook.yml[ 'api_key']}','/xd_receiver.html', {});"
     
     unless required_features.blank?
        init_string = <<-FBML

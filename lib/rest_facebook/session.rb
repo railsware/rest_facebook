@@ -75,7 +75,7 @@ module RestFacebook
       def signature(params)
         raw_string = params.inject([]) do |collection, pair|
           collection << pair.map { |x|
-            Array === x ? ActiveSupport::JSON.encode(x) : x
+            Array === x ? RestFacebook.dyno_json_encode(x) : x
           }.join("=")
           collection
         end.sort.join

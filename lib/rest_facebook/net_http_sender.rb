@@ -6,14 +6,14 @@ module RestFacebook
     
     def post_form( params)
       response = Net::HTTP.post_form post_url, post_for( params)
-      response = ActiveSupport::JSON.decode( response.body)
+      response = RestFacebook.dyno_json_decode( response.body)
       raise_exception_if_error response
     end
     
     
     private
       def post_url
-        URI.parse 'http://' + Connect::API_HOST + Connect::API_PATH_REST
+        URI.parse 'http://' + RestFacebook::API_HOST + RestFacebook::API_PATH_REST
       end
       
       def post_for( params)
@@ -21,7 +21,7 @@ module RestFacebook
         params.each do |k,v|
           k = k.to_s unless k.is_a?(String)
           if Array === v || Hash === v
-            post_params[k] = ActiveSupport::JSON.encode( v)
+            post_params[k] = RestFacebook.dyno_json_encode( v)
           else
             post_params[k] = v
           end
