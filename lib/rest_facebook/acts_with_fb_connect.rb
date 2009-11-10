@@ -17,7 +17,7 @@ module RestFacebook::ActsWithFbConnect
     
     private
       def lookup_fb_session
-          @fb_session = RestFacebook::Connect.load_fb_session_from cookies
+          @fb_session = RestFacebook.load_fb_session_from cookies
       end
     
   end
