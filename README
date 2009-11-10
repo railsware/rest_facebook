@@ -1,2 +1,10 @@
-REST facebook
-=========
+REST Facebook
+=============
+
+Simple plugin for Facebook REST server
+
+Usage:
+	* configure facebook app keys in rest_facebook.yml
+	* get instance session: RestFacebook.new_fb_session
+	* use simple call method and receive string response: session.call 'users.isAppUser' => "true/false"
+	* use mapped call and receive object representation response: map_call 'users.hasAppPermission', {:ext_perm=> 'status_update'} => true/false

@@ -1,4 +1,6 @@
 module RestFacebook
+  
+  VERSION                   = "draft"
 
   API_VERSION               = "1.0"
 
