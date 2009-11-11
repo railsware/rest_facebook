@@ -16,7 +16,8 @@ module RestFacebook::ConnectHelper
             function() {
               FB_RequireFeatures(#{required_features.to_json}, function() {
                 #{init_string}
-              }
+              });
+            }
           );
        FBML
     end
