@@ -20,7 +20,7 @@ module RestFacebook
     
     raise StandardError.new("Can't find required properties") unless check_app_config yaml
     
-    RAILS_DEFAULT_LOGGER.info("REST Facebook is configured")
+    RAILS_DEFAULT_LOGGER.info("** REST Facebook plugin is configured")
     
     @facebook_apps = yaml
   end

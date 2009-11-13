@@ -5,8 +5,8 @@ module RestFacebook
   class NetHttpSender
     
     def post_form( params)
-      response = Net::HTTP.post_form post_url, post_for( params)
-      response = RestFacebook.dyno_json_decode( response.body)
+      json = Net::HTTP.post_form post_url, post_for( params)
+      response = RestFacebook.dyno_json_decode json.body
       raise_exception_if_error response
     end
     
