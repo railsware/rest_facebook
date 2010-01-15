@@ -65,10 +65,15 @@ module RestFacebook
 end
 
 require 'passive_resource'
+
 if defined?( PassiveResource::Backports::JSON.decode) and defined?( PassiveResource::Backports::JSON.encode)
   module RestFacebook
     def self.dyno_json_encode(hash) PassiveResource::Backports::JSON.encode( hash); end
     def self.dyno_json_decode(str)  PassiveResource::Backports::JSON.decode( str); end
   end
+else
+  module RestFacebook
+      def self.dyno_json_encode(hash) ActiveSupport::JSON.encode( hash); end
+      def self.dyno_json_decode(str)  ActiveSupport::JSON.decode( str); end
+  end
 end
-
