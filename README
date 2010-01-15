@@ -1,7 +1,7 @@
 REST Facebook
 =============
 
-Simple plugin for Facebook REST server
+Simple plugin for Facebook REST API
 
 Usage:
 	* configure facebook app keys in rest_facebook.yml

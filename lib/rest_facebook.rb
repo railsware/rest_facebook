@@ -18,9 +18,10 @@ module RestFacebook
     yaml = YAML.load( ERB.new( File.read( yaml_file)).result)
     yaml = yaml[RAILS_ENV] if defined? RAILS_ENV
     
-    raise StandardError.new("Can't find required properties") unless check_app_config yaml
+    raise StandardError.new("rest_facebook.yml: Can't find properties for '#{RAILS_ENV}' environment") unless yaml
+    raise StandardError.new("rest_facebook.yml: Can't find required properties") unless check_app_config yaml
     
-    RAILS_DEFAULT_LOGGER.info("** REST Facebook plugin is configured")
+    RAILS_DEFAULT_LOGGER.info("** REST Facebook is configured")
     
     @facebook_apps = yaml
   end
@@ -63,13 +64,7 @@ module RestFacebook
   
 end
 
-if defined?( ActiveSupport::JSON.decode) and defined?( ActiveSupport::JSON.encode)
-  module RestFacebook
-    def self.dyno_json_encode(hash) ActiveSupport::JSON.encode( hash); end
-    def self.dyno_json_decode(str)  ActiveSupport::JSON.decode( str); end
-  end
-end
-
+require 'passive_resource'
 if defined?( PassiveResource::Backports::JSON.decode) and defined?( PassiveResource::Backports::JSON.encode)
   module RestFacebook
     def self.dyno_json_encode(hash) PassiveResource::Backports::JSON.encode( hash); end

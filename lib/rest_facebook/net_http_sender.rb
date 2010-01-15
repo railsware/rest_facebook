@@ -6,7 +6,7 @@ module RestFacebook
     
     def post_form( params)
       json = Net::HTTP.post_form post_url, post_for( params)
-      response = RestFacebook.dyno_json_decode json.body
+      response = RestFacebook.dyno_json_decode( json.body)
       raise_exception_if_error response
     end
     
@@ -34,7 +34,11 @@ module RestFacebook
           request_str = "for request: "
           response[ 'request_args'].reverse.map{|h| request_str << " #{h[ 'key']}='#{h[ 'value']}'" }
           error_str = "#{response[ "error_msg"]} #{request_str}"
-          raise RemoteStandardError.new( error_str, response[ "error_code"])
+          if RestFacebook::EXCEPTIONS_MAP[response["error_code"]]
+            raise RestFacebook::EXCEPTIONS_MAP[response["error_code"]].new(error_str, response[ "error_code"])
+          else
+            raise RemoteStandardError.new( error_str, response[ "error_code"])
+          end
         end
 
         response
